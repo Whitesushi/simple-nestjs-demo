@@ -17,6 +17,9 @@ export class LoggingInterceptor implements NestInterceptor {
     const response = context.switchToHttp().getResponse();
 
     const { method, url, params, query, body, headers } = request;
+    const ip = request.ip || request.connection.remoteAddress;
+    const user = request['user'] || null;
+
     const logData: any = {
       method,
       url,
@@ -24,6 +27,8 @@ export class LoggingInterceptor implements NestInterceptor {
       query,
       body,
       headers,
+      ip,
+      userId: user ? user.id : null,
       response: null,
       error: null,
     };
